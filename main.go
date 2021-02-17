@@ -19,6 +19,7 @@ import (
 //       only track specific channels?
 //       only respond in specific channels?
 //       figure out how this data should even be structured...
+//       probably convert main maps to sync.Maps
 
 type config struct {
 	Token            string
@@ -129,16 +130,14 @@ func (scoreboard *scoreBoard) messageReaction(s *discord.Session, m *discord.Mes
 			make(map[string]int),
 		}
 	}
-	log.Println(messageType)
+
 	switch messageType {
 	case "":
 		return
 	case "answer":
 		(*scoreboard)[message.Author.ID].answers[m.Emoji.Name]++
-		log.Println((*scoreboard)[message.Author.ID].answers[m.Emoji.Name])
 	case "question":
 		(*scoreboard)[message.Author.ID].questions[m.Emoji.Name]++
-		log.Println((*scoreboard)[message.Author.ID].answers[m.Emoji.Name])
 	}
 }
 
